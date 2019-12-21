@@ -45,13 +45,15 @@ server_socket.listen()
 # инициализируем список объектов на чтение, за которыми будет следить select
 to_monitor = []
 
-
+# как только мы установили соединение с сервером - тут же срабатывает select
+# создаётся client_socket и добавляется в to_monitor
 def accept_connection(server_socket):
     client_socket, addr = server_socket.accept()
     print("connection from: ", addr)
     to_monitor.append(client_socket)
 
-
+# как только мы отправили что-то в клиентский сокет - срабатывает select
+# идентифицируем клиенткий сокет - вызываем send_message()
 def send_message(client_socket):
     request = client_socket.recv(4096)
     if request:
@@ -106,4 +108,3 @@ select(...)
 if __name__ == '__main__':
     to_monitor.append(server_socket)
     event_loop()
-    # accept_connection(server_socket)
