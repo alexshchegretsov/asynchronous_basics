@@ -39,6 +39,13 @@ def event_loop():
         # select() возвращает кортеж (key, events) - нам нужен только key
         events = selector.select()
 
+        # первый элемент - key - это объект SelectorKey
+        # который является NamedTuple
+        # он связывает сокет, ожидаемое событие и данные
+        # у объекта SelectorKey - те же поля, что мы заполняли при регистрации
+        # fileobj, events, data
+
+
         for key, _ in events:
             # достаём параметр data из селектора
             callback = key.data
