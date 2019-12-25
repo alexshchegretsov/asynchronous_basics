@@ -72,6 +72,7 @@ def client(client_socket):
 def event_loop():
     while any([tasks, to_read, to_write]):
 
+        # для обеспечения событийного цикла работой
         while not tasks:
             # как только отлавливается событие -
             # извлекаем из словаря соответствующую пару сокет-генератор,
