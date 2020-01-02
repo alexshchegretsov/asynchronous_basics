@@ -30,6 +30,7 @@ def send_message(client_socket):
     if request:
         client_socket.sendall(b"Hello man\n")
     else:
+        # если закрываем соединение - перестаём мониторить клиентский сокет
         selector.unregister(client_socket)
         client_socket.close()
 
@@ -41,13 +42,13 @@ def event_loop():
 
         # первый элемент - key - это объект SelectorKey
         # который является NamedTuple
-        # он связывает сокет, ожидаемое событие и данные
+        # он связывает сокет, ожидаемое событие и функцию, которую нужно вызвать по наступлению этого события
         # у объекта SelectorKey - те же поля, что мы заполняли при регистрации
         # fileobj, events, data
 
 
         for key, _ in events:
-            # достаём параметр data из селектора
+            # достаём параметр data из селектора, т.е. функцию
             callback = key.data
             # передаём в функцию параметр fileobj - client/server socket
             callback(key.fileobj)

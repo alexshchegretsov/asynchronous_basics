@@ -5,7 +5,7 @@
 # yield from [1, 2, 3, 4]
 
 # инициализация генератора
-def coroutine(func):
+def init(func):
     def inner(*args, **kwargs):
         gen = func(*args, **kwargs)
         next(gen)
@@ -37,7 +37,7 @@ def subgen():
 # записывая в переменную returned_from_subgen
 
 
-@coroutine
+@init
 def delegator(gen):
     returned_from_subgen = yield from gen
     print(returned_from_subgen)
